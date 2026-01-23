@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="styles.css">
+        <link rel="manifest" href="manifest.json">
+        <title>Jcode</title>
+    </head>
+    <body>
+        <header>
+            <button onclick="New();">CLEAR</button>
+            <button onclick="Load();">LOAD</button>
+            <button onclick="Save();">SAVE</button>
+            <button onclick="Export();">EXPORT</button>
+        </header>
+
+        <textarea id="editor"></textarea>
+
+        <script src="app.js"></script>
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js')
+                    .then(() => console.log('Service worker registered'))
+                    .catch(err => console.error('Service worker registration failed', err));
+            }
+        </script>
+    </body>
+</html>

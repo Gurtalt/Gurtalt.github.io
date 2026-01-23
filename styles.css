@@ -1,0 +1,39 @@
+html, body{
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
+    
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
+#editor{
+    width: 100%;
+    height: 100%;
+    display: block;
+    box-sizing: border-box; 
+    resize: none;
+    overflow:auto;
+    font-size: 1em;
+    padding: 1em;
+    flex: 1 1 auto;
+}
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+}
+header button{
+    width: 50%;
+
+}
+
+@media (max-width: 400px) {
+    header {
+        flex-wrap: wrap;
+    }
+}
