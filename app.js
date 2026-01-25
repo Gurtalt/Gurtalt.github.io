@@ -23,3 +23,21 @@ function Export(){
     const body = encodeURIComponent(editor.value);
     window.location.href =`mailto:${email}?subject=${subject}&body=${body}`;
 }
+
+function SpawnKey(leftBracket,rightBracket){
+    const editor = document.getElementById('editor');
+    editor.focus()
+
+    selectionStart = editor.selectionStart;
+    selectionEnd = editor.selectionEnd;
+
+    if (selectionStart != selectionEnd){
+        editor.setRangeText(leftBracket+editor.value.slice(selectionStart,selectionEnd)+rightBracket,selectionStart,selectionEnd,'end');
+    }
+
+    else {
+        editor.setRangeText(leftBracket+rightBracket,selectionStart,selectionEnd,'end')
+
+        editor.selectionStart = editor.selectionEnd = selectionStart + leftBracket.length;
+    }
+}

@@ -9,6 +9,7 @@
         <title>Jcode</title>
     </head>
     <body>
+
         <header>
             <button onclick="New();">CLEAR</button>
             <button onclick="Load();">LOAD</button>
@@ -17,6 +18,23 @@
         </header>
 
         <textarea id="editor"></textarea>
+
+        <div id='customKeyBar'>
+
+            <button class='customKey' onclick='SpawnKey(this.dataset.leftBracket,this.dataset.rightBracket)' data-left-bracket="(" data-right-bracket=")">
+            ( ) 
+            </button>
+            <button class='customKey' onclick='SpawnKey(this.dataset.leftBracket,this.dataset.rightBracket)' data-left-bracket="'" data-right-bracket="'">
+            ' ' 
+            </button>
+            <button class='customKey' onclick='SpawnKey(this.dataset.leftBracket,this.dataset.rightBracket)' data-left-bracket="{" data-right-bracket="}">
+            { } 
+            </button>
+            <button class='customKey' onclick='SpawnKey(this.dataset.leftBracket,this.dataset.rightBracket)' data-left-bracket="[" data-right-bracket="]">
+            [ ] 
+            </button>
+
+        </div>
 
         <script src="app.js"></script>
         <script>
