@@ -8,6 +8,8 @@ function New(){
 
 function OpenFileLoader(){
     const keys = []
+    fileSelector.addEventListener("click",CloseFileLoader);
+    selector.addEventListener("click",(e) => {e.stopPropagation();});
     selector.innerHTML = "";
     fileSelector.style.display = "flex";
     for(let i=0; i < localStorage.length;i++){
@@ -22,7 +24,11 @@ function OpenFileLoader(){
 
 function CloseFileLoader(){
     fileSelector.style.display = "none"
+    fileSelector.removeEventListener("click");
+    selector.removeEventListener("click",(e) => {e.stopPropagation();});
 }
+
+
 
 function Load(){
     let importedContent = localStorage.getItem(selector.value);

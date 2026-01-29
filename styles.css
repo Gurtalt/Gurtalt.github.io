@@ -19,6 +19,10 @@ html, body{
     padding: 0%;
     
 }
+*{
+    font-family: 'Courier New', Courier, monospace;
+    box-sizing: border-box;
+}
 body{
     display: flex;
     flex-direction: column;
@@ -43,28 +47,31 @@ body{
 #fileSelector{
     flex-direction: column-reverse;
     position: absolute;
-    width: 30%;
-    height: 20vh;
-    margin-top: 10vh;
+    width: 100%;
+    height: 100%;
     z-index: 1000; 
     display: none;
-    left: 35%;
+    left: 0%;
+    align-items: flex-start;
+    box-sizing: border-box;
+   
 }
 #selector{
     font-size:2em;
     text-align: center;
     background-color: gray;
-    height: 100%;
-    width: 100%;
+    height: 20%;
+    width: 60%;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     background-color:grey;
     color: #efd469;
     border: #efd469 solid 1px;
+    align-self: center;
 }
 #selectorButton{
-    width: 100%;
-    height: 100%;
+    width: 60%;
+    height: 20%;
     font-size:2em;
     text-align: center;
     background-color:grey;
@@ -72,18 +79,21 @@ body{
     border: #efd469 solid 1px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    align-self: center;
+    font-weight: 900;
 }
 #closeButton{
     color: red;
     border: red solid 2px;
     border-radius: 60px;
     width: 25%;
-    height: 100%;
+    height: 20%;
     align-self: center;
     background-color:#083045;
     font-weight:bolder;
     font-size: 1.5em;
     margin-top: 10px;
+    margin-bottom: 10%;
 }
 #closeButton:hover{
     background-color: red;
@@ -97,7 +107,6 @@ header{
     flex-wrap: nowrap;
     height: 7vh;
     margin-bottom: 10px;
-    
 }
 header button{
     width: 50%;
@@ -127,7 +136,7 @@ header button:hover,.customKey:hover,#selectorButton:hover{
 position: fixed;
 top: 9vh;
 right: -4vw;
-width: 15vw;
+width: 17vw;
 height: 38vh;
 display: flex;
 flex-direction: column;
@@ -146,7 +155,20 @@ color: #efd469;
 border-bottom-left-radius: 20px;
 border-top-left-radius: 20px;
 border: #efd469 solid 1px;
+padding-right: 25px;
 }
 
+#infoBar{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #051f2d;
+    color: #efd469;
+    text-align: center;
+    font-size: 0.8em;
+    padding: 5px 0;
+    border-top: #efd469 solid 1px;
+}
 
 
