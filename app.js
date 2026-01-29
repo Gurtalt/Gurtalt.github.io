@@ -1,14 +1,33 @@
 const editor = document.getElementById("editor")
+const fileSelector = document.getElementById("fileSelector")
+const selector = document.getElementById("selector");
 
 function New(){
     editor.value = "";
 }
 
-function Load(){
+function OpenFileLoader(){
+    const keys = []
+    selector.innerHTML = "";
+    fileSelector.style.display = "flex";
+    for(let i=0; i < localStorage.length;i++){
+        keys.push(localStorage.key(i));
+        const fileOption = document.createElement("option");
+        fileOption.value = localStorage.key(i);
+        fileOption.innerText = localStorage.key(i)
+        selector.appendChild(fileOption);
+    }
     
-    const filename = prompt("File name?")
-    let importedContent = localStorage.getItem(filename);
+}
+
+function CloseFileLoader(){
+    fileSelector.style.display = "none"
+}
+
+function Load(){
+    let importedContent = localStorage.getItem(selector.value);
     editor.value = importedContent;
+    fileSelector.style.display = "none";
 }
 
 function Save(){

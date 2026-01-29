@@ -12,10 +12,18 @@
 
         <header>
             <button onclick="New();">CLEAR</button>
-            <button onclick="Load();">LOAD</button>
+            <button onclick="OpenFileLoader();">LOAD</button>
             <button onclick="Save();">SAVE</button>
             <button onclick="Export();">EXPORT</button>
         </header>
+
+        <div id="fileSelector">
+            <button onclick="CloseFileLoader();" id="closeButton">X</button>
+            <select name="selector" id="selector">
+                
+            </select>
+            <button onclick="Load();" id="selectorButton">Load</button>
+        </div>
 
         <textarea id="editor"></textarea>
 

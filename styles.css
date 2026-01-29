@@ -1,4 +1,4 @@
-/*JAY REID CSS STYLESHEET FOR HTML TEMPLATE | CREATED: 03/09/2025 | LAST UPDATED: 03/09/2025*/
+/*CSS STYLESHEET FOR JCODE | CREATED: 03/09/2025 | LAST UPDATED: 03/09/2025*/
 
 /*COLOUR SCHEME**
 
@@ -9,9 +9,7 @@ PRIMARY 2 = #051f2d
 YELLOW SECONDARY = #efd469
 
 SECONDARY 2 = #B38e2e
-
-
-WHITE SECONDARY = #F8F8FF */
+*/
 
 
 html, body{
@@ -42,24 +40,77 @@ body{
     color: #efd469;
     border: 0;
 }
+#fileSelector{
+    flex-direction: column-reverse;
+    position: absolute;
+    width: 30%;
+    height: 20vh;
+    margin-top: 10vh;
+    z-index: 1000; 
+    display: none;
+    left: 35%;
+}
+#selector{
+    font-size:2em;
+    text-align: center;
+    background-color: gray;
+    height: 100%;
+    width: 100%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color:grey;
+    color: #efd469;
+    border: #efd469 solid 1px;
+}
+#selectorButton{
+    width: 100%;
+    height: 100%;
+    font-size:2em;
+    text-align: center;
+    background-color:grey;
+    color: #efd469;
+    border: #efd469 solid 1px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+#closeButton{
+    color: red;
+    border: red solid 2px;
+    border-radius: 60px;
+    width: 25%;
+    height: 100%;
+    align-self: center;
+    background-color:#083045;
+    font-weight:bolder;
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+#closeButton:hover{
+    background-color: red;
+    color: #083045;
+}
 header{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex: 0 0 auto;
     flex-wrap: nowrap;
-    height: 8vh;
-    
+    height: 7vh;
+    margin-bottom: 10px;
     
 }
 header button{
     width: 50%;
     background-color: #051f2d;
     color: #efd469;
-    border-radius: 20px;
+    border-radius: 10px;
     border: #efd469 solid 1px;
     font-size: 1.5em;
+}
 
+header button:hover,.customKey:hover,#selectorButton:hover{
+    background-color: #efd469;
+    color: #051f2d;
 }
 
 @media (max-width: 400px) {
@@ -75,9 +126,9 @@ header button{
 #customKeyBar{
 position: fixed;
 top: 9vh;
-right: -2vw;
+right: -4vw;
 width: 15vw;
-height: 45vh;
+height: 38vh;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -92,8 +143,10 @@ align-items: center;
 align-content: center;
 background-color: #051f2d;
 color: #efd469;
-border-radius: 20px;
+border-bottom-left-radius: 20px;
+border-top-left-radius: 20px;
 border: #efd469 solid 1px;
 }
+
 
 
