@@ -9,20 +9,26 @@
         <title>Jcode</title>
     </head>
     <body>
-        <span id="infoBar">JCode; Build 0.3.1; 29/01/2026;</span>
+        <span id="infoBar">JCode; Build 0.3.2; 03/02/2026;</span>
         <header>
             <button onclick="New();">CLEAR</button>
-            <button onclick="OpenFileLoader();">LOAD</button>
-            <button onclick="Save();">SAVE</button>
-            <button onclick="Export();">EXPORT</button>
+            <button data-save-load="load" onclick="OpenFileLoader(this.dataset.saveLoad);">LOAD</button>
+            <button data-save-load="save" onclick="OpenFileLoader(this.dataset.saveLoad);">SAVE</button>
+            <button data-save-load="export" onclick="OpenFileLoader(this.dataset.saveLoad);">EXPORT</button>
         </header>
 
         <div id="fileSelector">
+            <div id="selectorBox">
             <button onclick="CloseFileLoader();" id="closeButton">X</button>
+            
             <select name="selector" id="selector">
                 
             </select>
+
+            <input type="text" id="selectorInput">
+            
             <button onclick="Load();" id="selectorButton">LOAD:</button>
+            </div>
         </div>
 
         <textarea id="editor"></textarea>

@@ -56,6 +56,15 @@ body{
     box-sizing: border-box;
    
 }
+#selectorBox{
+    position: absolute;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 60%;
+    width: 60%;
+    align-self: center;
+    bottom:10%;
+}
 #selector{
     font-size:2em;
     text-align: center;
@@ -79,6 +88,18 @@ body{
     border: #efd469 solid 1px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    align-self: center;
+    font-weight: 900;
+}
+
+#selectorInput{
+    width: 60%;
+    height: 20%;
+    font-size:2em;
+    text-align: center;
+    background-color:white;
+    color: #efd469;
+    border: #efd469 solid 1px;
     align-self: center;
     font-weight: 900;
 }

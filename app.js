@@ -1,51 +1,69 @@
-const editor = document.getElementById("editor")
-const fileSelector = document.getElementById("fileSelector")
+const editor = document.getElementById("editor");
+const fileSelectorContainer = document.getElementById("fileSelector");
 const selector = document.getElementById("selector");
+const fileSelectorWrapper = document.getElementById("selectorBox");
+const selectorButton = document.getElementById("selectorButton");
+const fileInput = document.getElementById("selectorInput");
+let lastFileName = "";
 
 function New(){
     editor.value = "";
 }
 
-function OpenFileLoader(){
+function OpenFileLoader(saveOrLoad){
     const keys = []
-    fileSelector.addEventListener("click",CloseFileLoader);
-    selector.addEventListener("click",(e) => {e.stopPropagation();});
+    fileSelectorContainer.addEventListener("click",CloseFileLoader);
+    fileSelectorWrapper.addEventListener("click",(e) => {e.stopPropagation();});
+    selector.addEventListener('change', function ChangeInput(event) {
+        fileInput.value = event.target.value;
+    })
     selector.innerHTML = "";
-    fileSelector.style.display = "flex";
+    fileSelectorContainer.style.display = "flex";
     for(let i=0; i < localStorage.length;i++){
-        keys.push(localStorage.key(i));
-        const fileOption = document.createElement("option");
-        fileOption.value = localStorage.key(i);
-        fileOption.innerText = localStorage.key(i)
-        selector.appendChild(fileOption);
-    }
+                            keys.push(localStorage.key(i));
+                            const fileOption = document.createElement("option");
+                            fileOption.value = localStorage.key(i);
+                            fileOption.innerText = localStorage.key(i)
+                            selector.appendChild(fileOption);
+                        }
+    selector.value = lastFileName;
+    switch (saveOrLoad){
+                    case "save": selectorButton.innerText = "SAVE"; selectorButton.onclick = Save; break;
+
+                    case "load": selectorButton.innerText = "LOAD"; selectorButton.onclick = Load; break;
+
+                    case "export": selectorButton.innerText = "EXPORT"; selectorButton.onclick = Export; break;
+                        
+                }
+    
     
 }
 
 function CloseFileLoader(){
-    fileSelector.style.display = "none"
-    fileSelector.removeEventListener("click");
+    fileSelectorContainer.style.display = "none";
+    lastFileName = selector.value;
+    
+    fileSelectorContainer.removeEventListener("click");
     selector.removeEventListener("click",(e) => {e.stopPropagation();});
 }
 
 
 
 function Load(){
-    let importedContent = localStorage.getItem(selector.value);
+    let importedContent = localStorage.getItem(fileInput.value);
     editor.value = importedContent;
-    fileSelector.style.display = "none";
+    CloseFileLoader();
 }
 
 function Save(){
-   
-    const filename = prompt("File name?")
-    localStorage.setItem(filename,editor.value)
+    localStorage.setItem(fileInput.value,editor.value);
+    CloseFileLoader();
 }
 
 function Export(){
-    const subject = encodeURIComponent(prompt("Enter file name/ subject line:"));
+    const subject = encodeURIComponent(fileInput.value);
     let email = subject+" <"+prompt("Enter desired recipiants Email:")+">";
-    const body = encodeURIComponent(editor.value);
+    const body = encodeURIComponent(localStorage.getItem(fileInput.value));
     window.location.href =`mailto:${email}?subject=${subject}&body=${body}`;
 }
 
