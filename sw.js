@@ -1,11 +1,12 @@
-const CACHE_NAME = 'editor-cache-v0.3.2';
+const CACHE_NAME = 'editor-cache-v0.4.1';
 const FILES_TO_CACHE = [
     '/',
     '/index.html',
     '/style.css',
     '/editor.js',
     '/manifest.json',
-    '/favicon.png'
+    '/favicon.png',
+    '/keyPress.mp3'
 ];
 
 self.addEventListener('install', event => {
