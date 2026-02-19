@@ -85,13 +85,26 @@ function SpawnKey(leftBracket,rightBracket){
     }
 }
 
+sounds = []
+poolSize = 7;
+
+for (let i = 0; i < poolSize; i++){
+    const audio = new Audio("keyPress.mp3");
+    sounds.push(audio);
+}  
+
+let index = 0;
+
+
+
 document.addEventListener("keydown",(e) => {
-    if (e.key.length == 1){
+    if (e.key.length == 1 && !e.repeat){
         PlayKeySound();
     }
 })
 
 function PlayKeySound(){
-    const audio = new Audio("keyPress.mp3");
-    audio.play();
+    sounds[index].currentTime = 0;  
+    sounds[index].play();
+    index = (index + 1) % poolSize;
 }

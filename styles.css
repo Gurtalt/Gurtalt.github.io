@@ -27,22 +27,26 @@ body{
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: #083045;
+    background-color: #051f2d;
     color: #efd469;
 
 }
 #editor{
-    width: 100%;
+    width: 95%;
+    
+    border: #efd469 solid 1px;
+    border-left: 0;
     display: block;
     box-sizing: border-box; 
     resize: none;
     overflow:auto;
     font-size: 1em;
     padding: 1em;
+    padding-top: 2em;
     flex: 1 1 auto;
     background-color: #083045;
     color: #efd469;
-    border: 0;
+    
 }
 #fileSelector{
     flex-direction: column-reverse;
@@ -128,6 +132,8 @@ header{
     flex-wrap: nowrap;
     height: 7vh;
     margin-bottom: 10px;
+    background-color: #083045;
+    
 }
 header button{
     width: 50%;
@@ -157,7 +163,7 @@ header button:hover,.customKey:hover,#selectorButton:hover{
 position: fixed;
 top: 9vh;
 right: -4vw;
-width: 14vw;
+width: 16vw;
 height: 38vh;
 display: flex;
 flex-direction: column;
