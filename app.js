@@ -84,3 +84,14 @@ function SpawnKey(leftBracket,rightBracket){
         editor.selectionStart = editor.selectionEnd = selectionStart + leftBracket.length;
     }
 }
+
+document.addEventListener("keydown",(e) => {
+    if (e.key.length == 1){
+        PlayKeySound();
+    }
+})
+
+function PlayKeySound(){
+    const audio = new Audio("keyPress.mp3");
+    audio.play();
+}
