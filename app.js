@@ -5,9 +5,60 @@ const fileSelectorWrapper = document.getElementById("selectorBox");
 const selectorButton = document.getElementById("selectorButton");
 const fileInput = document.getElementById("selectorInput");
 let lastFileName = "";
+let returningUser = false;
+const defaultSettings = {
+    additionalKeysEnabled: true,
+    keySoundEnabled: true
+}
+let sounds = []
+const poolSize = 4;
+
 
 function New(){
     editor.value = "";
+}
+
+
+function OpenSettings(){
+    const settings = JSON.parse(localStorage.getItem("editorSettings")) ?? defaultSettings;
+    const additionalKeysToggle = document.getElementById("additionalKeysToggle"); 
+    const keySoundToggle = document.getElementById("keySoundToggle");
+
+    additionalKeysToggle.checked = settings.additionalKeysEnabled;
+    keySoundToggle.checked = settings.keySoundEnabled;
+    document.getElementById("settingsPanel").style.display = "block";
+}
+function CloseSettings(){
+    ApplySettings({
+        additionalKeysEnabled: document.getElementById("additionalKeysToggle").checked,
+        keySoundEnabled: document.getElementById("keySoundToggle").checked
+    });
+    document.getElementById("settingsPanel").style.display = "none";
+}
+
+
+function ApplySettings(settings){
+    if(settings.additionalKeysEnabled){
+        document.getElementById("customKeyBar").style.display = "block";
+}
+    else {
+        document.getElementById("customKeyBar").style.display = "none";
+    }
+    
+    if (settings.keySoundEnabled){
+        sounds = [];
+        console.log("Key sound enabled, initializing sound pool...");
+        for (let i = 0; i < poolSize; i++){
+            sounds.push(new Audio("keyPress.mp3"));
+            sounds[i].preload = "auto";
+        }
+    }
+    else {
+        console.log("Key sound disabled, clearing sound pool...");
+        sounds = [];
+    }
+
+    localStorage.setItem("editorSettings",JSON.stringify(settings));
 }
 
 function OpenFileLoader(saveOrLoad){
@@ -20,13 +71,17 @@ function OpenFileLoader(saveOrLoad){
     selector.innerHTML = "";
     fileSelectorContainer.style.display = "flex";
     for(let i=0; i < localStorage.length;i++){
-                            keys.push(localStorage.key(i));
-                            const fileOption = document.createElement("option");
-                            fileOption.value = localStorage.key(i);
-                            fileOption.innerText = localStorage.key(i)
-                            selector.appendChild(fileOption);
-                        }
+        if (localStorage.key(i).startsWith("text_")){
+                    keys.push(localStorage.key(i));
+                    const fileOption = document.createElement("option");
+                    fileOption.value = localStorage.key(i).substring(5); // Remove "text_" prefix
+                    fileOption.innerText = localStorage.key(i).substring(5); // Remove "text_" prefix
+                    selector.appendChild(fileOption);
+                }
+    }
+
     selector.value = lastFileName;
+
     switch (saveOrLoad){
                     case "save": selectorButton.innerText = "SAVE"; selectorButton.onclick = Save; break;
 
@@ -43,36 +98,52 @@ function CloseFileLoader(){
     fileSelectorContainer.style.display = "none";
     lastFileName = selector.value;
     
-    fileSelectorContainer.removeEventListener("click");
+    fileSelectorContainer.removeEventListener("click",CloseFileLoader);
     selector.removeEventListener("click",(e) => {e.stopPropagation();});
 }
 
 
 
 function Load(){
-    let importedContent = localStorage.getItem(fileInput.value);
-    editor.value = importedContent;
+    let importedContent = localStorage.getItem("text_"+fileInput.value);
+    if (importedContent){
+        const fileData = JSON.parse(importedContent);
+        editor.value = fileData.content;
+        editor.selectionStart = fileData.cursorPosition;
+        editor.selectionEnd = fileData.cursorPosition;
+    }
     CloseFileLoader();
 }
 
 function Save(){
-    localStorage.setItem(fileInput.value,editor.value);
+    const fileData = {
+        name: fileInput.value,
+        content: editor.value,
+        cursorPosition: editor.selectionStart
+    }
+
+    localStorage.setItem("text_"+fileInput.value,JSON.stringify(fileData));
     CloseFileLoader();
 }
 
 function Export(){
-    const subject = encodeURIComponent(fileInput.value);
+    const file = localStorage.getItem("text_"+fileInput.value);
+    if (!file){
+        alert("File not found!");
+        return;
+    }
+    const fileData = JSON.parse(file);
+    const subject = encodeURIComponent(fileData.name);
     let email = subject+" <"+prompt("Enter desired recipiants Email:")+">";
-    const body = encodeURIComponent(localStorage.getItem(fileInput.value));
+    const body = encodeURIComponent(file.content);
     window.location.href =`mailto:${email}?subject=${subject}&body=${body}`;
 }
 
 function SpawnKey(leftBracket,rightBracket){
-    const editor = document.getElementById('editor');
     editor.focus()
 
-    selectionStart = editor.selectionStart;
-    selectionEnd = editor.selectionEnd;
+    let selectionStart = editor.selectionStart;
+    let selectionEnd = editor.selectionEnd;
 
     if (selectionStart != selectionEnd){
         editor.setRangeText(leftBracket+editor.value.slice(selectionStart,selectionEnd)+rightBracket,selectionStart,selectionEnd,'end');
@@ -85,26 +156,19 @@ function SpawnKey(leftBracket,rightBracket){
     }
 }
 
-sounds = []
-poolSize = 7;
-
-for (let i = 0; i < poolSize; i++){
-    const audio = new Audio("keyPress.mp3");
-    sounds.push(audio);
-}  
 
 let index = 0;
-
-
+function PlayKeySound(){
+    if (sounds.length == 0) return; // No sounds available, likely because key sound is disabled
+    
+    sounds[index].currentTime = 0;  
+    sounds[index].play();
+    index = (index + 1) % sounds.length; // Move to the next sound in the pool
+}
 
 document.addEventListener("keydown",(e) => {
     if (e.key.length == 1 && !e.repeat){
         PlayKeySound();
     }
 })
-
-function PlayKeySound(){
-    sounds[index].currentTime = 0;  
-    sounds[index].play();
-    index = (index + 1) % poolSize;
-}
+ApplySettings(JSON.parse(localStorage.getItem("editorSettings")) ?? defaultSettings);

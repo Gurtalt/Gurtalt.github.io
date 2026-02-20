@@ -1,4 +1,4 @@
-const CACHE_NAME = 'editor-cache-v0.4.2';
+const CACHE_NAME = 'editor-cache-v0.5.0';
 const FILES_TO_CACHE = [
     '/',
     '/index.html',
@@ -6,12 +6,14 @@ const FILES_TO_CACHE = [
     '/editor.js',
     '/manifest.json',
     '/favicon.png',
+    '/settings.png',
     '/keyPress.mp3'
 ];
 
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
+        caches.open(CACHE_NAME).then(cache => 
+            cache.addAll(FILES_TO_CACHE))
     );
 });
 
@@ -20,3 +22,5 @@ self.addEventListener('fetch', event => {
         caches.match(event.request).then(response => response || fetch(event.request))
     );
 });
+
+

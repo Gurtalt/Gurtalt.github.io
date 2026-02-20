@@ -46,8 +46,74 @@ body{
     flex: 1 1 auto;
     background-color: #083045;
     color: #efd469;
+}
+#settingsPanel{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1000; 
+    display: none;
+    left: 0%;
+    top: 20%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     
 }
+#settingsPanel div{
+    background-color: #051f2d;
+    border: #efd469 solid 5px;
+    border-radius: 40px;
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    margin: auto;
+}
+
+#settingsPanel label{
+    font-size: 1.5em;
+    display: block;
+    margin-bottom: 10px;
+}
+#settingsButton{
+    position: absolute;
+    top: 88%;
+    right: -1%;
+    width: 8%;
+    height: 15%;
+    padding: 0%;
+    border-top-left-radius: 55px;
+    background-image: url("settings.png");
+    background-size: cover;
+    background-position: center;
+    background-color: #051f2d;
+    border: none;
+    border-left: #efd469 solid 1px;
+    border-top: #efd469 solid 1px;
+    background-repeat: no-repeat;
+
+    color: #efd469;
+    font-size: 1.5em;
+    z-index: 2000;
+     
+}
+@media (max-width: 400px) {
+    #settingsButton{
+        width: 15%;
+        height: 10%;
+        top: 90%;
+        background-size: 80px 80px;
+        background-position-x: 10px;
+        background-position-y: 10px;
+    }
+}
+#settingsButton:hover{
+    background-color: #efd469;
+    color: #051f2d;
+}
+
 #fileSelector{
     flex-direction: column-reverse;
     position: absolute;

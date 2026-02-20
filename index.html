@@ -9,7 +9,7 @@
         <title>Jcode</title>
     </head>
     <body>
-        <span id="infoBar">JCode; Build 0.4.2; 19/02/2026;</span>
+        <span id="infoBar">JCode; Build 0.5.0; 20/02/2026;</span>
         <header>
             <button onclick="New();">CLEAR</button>
             <button data-save-load="load" onclick="OpenFileLoader(this.dataset.saveLoad);">LOAD</button>
@@ -50,6 +50,21 @@
 
         </div>
 
+        <div id="settingsPanel">
+            <div>
+            <label for="additionalKeysToggle">Additional Keys:</label>
+            <input type="checkbox" id="additionalKeysToggle" onchange="ToggleAdditionalKeys();">
+            <br>
+            <br>
+            <label for="keySoundToggle">Key Sound:</label>
+            <input type="checkbox" id="keySoundToggle" onchange="ToggleKeySound();">
+            <br>
+            <button onclick="CloseSettings();" id="closeButton">X</button>
+            </div>
+        </div>
+        <button onclick="OpenSettings();" id="settingsButton">
+            
+        </button>
         <script src="app.js"></script>
         <script>
             if ('serviceWorker' in navigator) {
