@@ -147,7 +147,7 @@ function Export(){
     const fileData = JSON.parse(file);
     const subject = encodeURIComponent(fileData.name);
     let email = subject+" <"+prompt("Enter desired recipiants Email:")+">";
-    const body = encodeURIComponent(file.content);
+    const body = encodeURIComponent(fileData.content);
     window.location.href =`mailto:${email}?subject=${subject}&body=${body}`;
 }
 
