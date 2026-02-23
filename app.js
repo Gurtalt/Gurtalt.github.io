@@ -7,6 +7,7 @@ const fileInput = document.getElementById("selectorInput");
 let lastFileName = "";
 let returningUser = false;
 const defaultSettings = {
+    editKeysEnabled: true,
     additionalKeysEnabled: true,
     keySoundEnabled: true
 }
@@ -23,15 +24,18 @@ function OpenSettings(){
     const settings = JSON.parse(localStorage.getItem("editorSettings")) ?? defaultSettings;
     const additionalKeysToggle = document.getElementById("additionalKeysToggle"); 
     const keySoundToggle = document.getElementById("keySoundToggle");
+    const editKeysToggle = document.getElementById("editKeysToggle");
 
     additionalKeysToggle.checked = settings.additionalKeysEnabled;
     keySoundToggle.checked = settings.keySoundEnabled;
+    editKeysToggle.checked = settings.editKeysEnabled;
     document.getElementById("settingsPanel").style.display = "block";
 }
 function CloseSettings(){
     ApplySettings({
         additionalKeysEnabled: document.getElementById("additionalKeysToggle").checked,
-        keySoundEnabled: document.getElementById("keySoundToggle").checked
+        keySoundEnabled: document.getElementById("keySoundToggle").checked,
+        editKeysEnabled: document.getElementById("editKeysToggle").checked
     });
     document.getElementById("settingsPanel").style.display = "none";
 }
@@ -44,12 +48,20 @@ function ApplySettings(settings){
     else {
         document.getElementById("customKeyBar").style.display = "none";
     }
-    
+
+    if(settings.editKeysEnabled){
+        document.getElementById("buttonBar").style.display = "flex";
+
+    }
+    else {
+        document.getElementById("buttonBar").style.display = "none";
+    }
+
     if (settings.keySoundEnabled){
         sounds = [];
         console.log("Key sound enabled, initializing sound pool...");
         for (let i = 0; i < poolSize; i++){
-            sounds.push(new Audio("keyPress.mp3"));
+            sounds.push(new Audio("media/keyPress.mp3"));
             sounds[i].preload = "auto";
         }
     }
@@ -69,7 +81,7 @@ function OpenFileLoader(saveOrLoad){
         fileInput.value = event.target.value;
     })
     selector.innerHTML = "";
-    fileSelectorContainer.style.display = "flex";
+    fileSelectorContainer.style.display = "block";
     for(let i=0; i < localStorage.length;i++){
         if (localStorage.key(i).startsWith("text_")){
                     keys.push(localStorage.key(i));

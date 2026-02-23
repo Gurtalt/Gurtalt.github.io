@@ -6,30 +6,20 @@
         
         <link rel="stylesheet" href="styles.css">
         <link rel="manifest" href="manifest.json">
-        <title>Jcode</title>
+        <link rel="icon" type="image/x-icon" href="media/favicon.png">
+        <title>JCode</title>
+        
     </head>
     <body>
-        <span id="infoBar">JCode; Build 0.5.0; 20/02/2026;</span>
-        <header>
+        <span id="infoBar">JCode; Build 0.6.0; 23/02/2026;</span>
+        <header id="buttonBar">
             <button onclick="New();">CLEAR</button>
             <button data-save-load="load" onclick="OpenFileLoader(this.dataset.saveLoad);">LOAD</button>
             <button data-save-load="save" onclick="OpenFileLoader(this.dataset.saveLoad);">SAVE</button>
             <button data-save-load="export" onclick="OpenFileLoader(this.dataset.saveLoad);">EXPORT</button>
         </header>
 
-        <div id="fileSelector">
-            <div id="selectorBox">
-            <button onclick="CloseFileLoader();" id="closeButton">X</button>
-            
-            <select name="selector" id="selector">
-                
-            </select>
-
-            <input type="text" id="selectorInput">
-            
-            <button onclick="Load();" id="selectorButton">LOAD:</button>
-            </div>
-        </div>
+        
 
         <textarea id="editor"></textarea>
 
@@ -50,8 +40,28 @@
 
         </div>
 
+        <div id="fileSelector">
+            <div id="selectorBox">
+            
+                <select name="selector" id="selector">
+                    
+                </select>
+
+                <input type="text" id="selectorInput" placeholder="File Name...">
+                
+                <button onclick="Load();" id="selectorButton">LOAD:</button>
+                
+                <button onclick="CloseFileLoader();" id="closeButton">X</button>
+    
+            </div>
+
+        </div>
         <div id="settingsPanel">
             <div>
+            <label for="editKeysToggle">Edit Keys:</label>
+            <input type="checkbox" id="editKeysToggle" onchange="ToggleEditKeys();">
+            <br>
+            <br>
             <label for="additionalKeysToggle">Additional Keys:</label>
             <input type="checkbox" id="additionalKeysToggle" onchange="ToggleAdditionalKeys();">
             <br>
@@ -59,6 +69,12 @@
             <label for="keySoundToggle">Key Sound:</label>
             <input type="checkbox" id="keySoundToggle" onchange="ToggleKeySound();">
             <br>
+            <header id="buttonBar">
+                <button onclick="New();">CLEAR</button>
+                <button data-save-load="load" onclick="OpenFileLoader(this.dataset.saveLoad);">LOAD</button>
+                <button data-save-load="save" onclick="OpenFileLoader(this.dataset.saveLoad);">SAVE</button>
+                <button data-save-load="export" onclick="OpenFileLoader(this.dataset.saveLoad);">EXPORT</button>
+                </header>
             <button onclick="CloseSettings();" id="closeButton">X</button>
             </div>
         </div>

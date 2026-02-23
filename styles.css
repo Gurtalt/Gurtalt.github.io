@@ -54,11 +54,10 @@ body{
     z-index: 1000; 
     display: none;
     left: 0%;
-    top: 20%;
+    top: 18%;
     align-items: center;
     justify-content: center;
     text-align: center;
-    
 }
 #settingsPanel div{
     background-color: #051f2d;
@@ -85,7 +84,7 @@ body{
     height: 15%;
     padding: 0%;
     border-top-left-radius: 55px;
-    background-image: url("settings.png");
+    background-image: url("media/settings.png");
     background-size: cover;
     background-position: center;
     background-color: #051f2d;
@@ -115,82 +114,80 @@ body{
 }
 
 #fileSelector{
-    flex-direction: column-reverse;
     position: absolute;
     width: 100%;
     height: 100%;
     z-index: 1000; 
     display: none;
     left: 0%;
-    align-items: flex-start;
-    box-sizing: border-box;
-   
+    top: 18%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 #selectorBox{
-    position: absolute;
+    background-color: #051f2d;
+    border: #efd469 solid 5px;
+    border-radius: 40px;
+    width: 70%;
+    padding: 20px;
     display: flex;
-    flex-direction: column-reverse;
-    height: 60%;
-    width: 60%;
-    align-self: center;
-    bottom:10%;
+    flex-direction: column; 
+    justify-content: space-between;
+    margin: auto;
 }
 #selector{
+    width: 50vw;
     font-size:2em;
     text-align: center;
-    background-color: gray;
-    height: 20%;
-    width: 60%;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    background-color:grey;
+    background-color: #051f2d;
     color: #efd469;
     border: #efd469 solid 1px;
     align-self: center;
+    margin-bottom: 25px;
 }
 #selectorButton{
-    width: 60%;
-    height: 20%;
+    width: 50vw;
     font-size:2em;
     text-align: center;
-    background-color:grey;
+    background-color:#051f2d;
     color: #efd469;
     border: #efd469 solid 1px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
     align-self: center;
     font-weight: 900;
+    margin-bottom: 25px;
+    border-radius: 20px;
 }
 
 #selectorInput{
-    width: 60%;
-    height: 20%;
-    font-size:2em;
+    width: 50vw;
+    font-size:1.5em;
     text-align: center;
-    background-color:white;
+    background-color:#083045;
     color: #efd469;
     border: #efd469 solid 1px;
     align-self: center;
     font-weight: 900;
+    margin-bottom: 25px;
 }
 #closeButton{
+    width: 40vw;
     color: red;
     border: red solid 2px;
     border-radius: 60px;
-    width: 25%;
-    height: 20%;
     align-self: center;
-    background-color:#083045;
+    background-color:#051f2d;
     font-weight:bolder;
     font-size: 1.5em;
-    margin-top: 10px;
-    margin-bottom: 10%;
+    margin-bottom: 15px;
+    margin-top: 25px;
+
 }
 #closeButton:hover{
     background-color: red;
     color: #083045;
 }
-header{
+#buttonBar{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -216,7 +213,7 @@ header button:hover,.customKey:hover,#selectorButton:hover{
 }
 
 @media (max-width: 400px) {
-    header {
+    #buttonBar {
         flex-wrap: wrap;
     }
     #customKeyBar{
