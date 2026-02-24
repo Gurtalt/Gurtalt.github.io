@@ -11,7 +11,7 @@
         
     </head>
     <body>
-        <span id="infoBar">JCode; Build 0.6.3; 24/02/2026;</span>
+        <span id="infoBar">JCode; Build 0.6.4; 24/02/2026;</span>
         <header id="buttonBar">
             <button onclick="New();">CLEAR</button>
             <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'load'});">LOAD</button>
@@ -87,10 +87,14 @@
         <script src="app.js"></script>
         <script>
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('sw.js')
-                    .then(() => console.log('Service worker registered'))
-                    .catch(err => console.error('Service worker registration failed', err));
+            navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' })
+                .catch(err => console.error('SW registration failed', err));
+
+           
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                window.location.reload();
+            });
             }
-        </script>
+</script>
     </body>
 </html>
