@@ -5,6 +5,8 @@ const selector = document.getElementById("selector");
 const fileSelectorWrapper = document.getElementById("selectorBox");
 const selectorButton = document.getElementById("selectorButton");
 const fileInput = document.getElementById("selectorInput");
+const pageNumberButton = document.getElementById("pageNumber");
+const pageNumberMenuButton = document.getElementById("pageNumberMenu");
 let lastFileName = "";
 let returningUser = false;
 const defaultSettings = {
@@ -14,13 +16,22 @@ const defaultSettings = {
 }
 let sounds = []
 const poolSize = 4;
+let index = 0;
 let settingsMenuOpen = false;
 let fileMenuOpen = false;
 
+let currentPages = [];
+let pageNumber = 0;
 
 function New(){
+    currentPages = [];
     editor.value = "";
+    pageNumber = 0;
+
+    pageNumberButton.innerText = pageNumber + 1;
+    pageNumberMenuButton.innerText = pageNumber + 1;
 }
+
 
 function OpenMenu(menu){
     if(settingsMenuOpen){
@@ -42,6 +53,8 @@ function OpenMenu(menu){
     menuElement.querySelector("#settingsMenu").addEventListener("click",(e) => {e.stopPropagation();});
     menuElement.querySelector("#fileSelectorMenu").addEventListener("click",(e) => {e.stopPropagation();});
 }
+
+
 function CloseMenu(){
     menuElement.style.display = "none";
     if(settingsMenuOpen){
@@ -61,6 +74,7 @@ function CloseMenu(){
     }
 }          
 
+
 function OpenSettings(){
     const settings = JSON.parse(localStorage.getItem("editorSettings")) ?? defaultSettings;
     const additionalKeysToggle = document.getElementById("additionalKeysToggle"); 
@@ -74,7 +88,6 @@ function OpenSettings(){
 }
 
 
-
 function ApplySettings(settings){
     if(settings.additionalKeysEnabled){
         document.getElementById("customKeyBar").style.display = "block";
@@ -85,10 +98,12 @@ function ApplySettings(settings){
 
     if(settings.editKeysEnabled){
         document.getElementById("buttonBar").style.display = "flex";
+        document.getElementById("arrowBar").style.display = "flex";
 
     }
     else {
         document.getElementById("buttonBar").style.display = "none";
+        document.getElementById("arrowBar").style.display = "none";
     }
 
     if (settings.keySoundEnabled){
@@ -107,9 +122,6 @@ function ApplySettings(settings){
     localStorage.setItem("editorSettings",JSON.stringify(settings));
 }
 
-selector.addEventListener('change', function ChangeInput(event) {
-        fileInput.value = event.target.value;
-    });
 
 function OpenFileLoader(action){
     const keys = []
@@ -140,30 +152,34 @@ function OpenFileLoader(action){
 }
 
 
-
-
-
 function Load(){
     let importedContent = localStorage.getItem("text_"+fileInput.value);
     if (importedContent){
         const fileData = JSON.parse(importedContent);
-        editor.value = fileData.content;
+        editor.value = fileData.content[0];
         editor.selectionStart = fileData.cursorPosition;
         editor.selectionEnd = fileData.cursorPosition;
+        currentPages = fileData.content;
+        pageNumber = 0;
+        pageNumberButton.innerText = pageNumber + 1;
+        pageNumberMenuButton.innerText = pageNumber + 1;
     }
     CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
 
+
 function Save(){
+    currentPages.splice(pageNumber,1,editor.value);
     const fileData = {
         name: fileInput.value,
-        content: editor.value,
+        content: currentPages,
         cursorPosition: editor.selectionStart
     }
-    
+
     localStorage.setItem("text_"+fileInput.value,JSON.stringify(fileData));
     CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
+
 
 function Export(){
     const file = localStorage.getItem("text_"+fileInput.value);
@@ -174,10 +190,11 @@ function Export(){
     const fileData = JSON.parse(file);
     const subject = encodeURIComponent(fileData.name);
     const email = prompt("Enter desired recipiants Email:");
-    const body = encodeURIComponent(fileData.content);
+    const body = encodeURIComponent(fileData.content.join("\n---PAGE BREAK---\n"));
     window.location.href =`mailto:${email}?subject=${subject}&body=${body}`;
     CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
+
 
 function SpawnKey(leftBracket,rightBracket){
     editor.focus()
@@ -197,7 +214,6 @@ function SpawnKey(leftBracket,rightBracket){
 }
 
 
-let index = 0;
 function PlayKeySound(){
     if (sounds.length == 0) return; // No sounds available, likely because key sound is disabled
     
@@ -206,9 +222,53 @@ function PlayKeySound(){
     index = (index + 1) % sounds.length; // Move to the next sound in the pool
 }
 
+
+function MovePage(direction){
+    const currentText = editor.value;
+    editor.selectionStart = 0;
+    editor.selectionEnd = 0;
+
+    if (direction == "next"){
+
+        currentPages.splice(pageNumber,1,currentText);
+        pageNumber++;
+        if (pageNumber >= currentPages.length){
+            pageNumber = 0;
+        }
+        editor.value = currentPages[pageNumber];
+        pageNumberButton.innerText = pageNumber + 1;
+        pageNumberMenuButton.innerText = pageNumber + 1;
+    }
+    else if (direction == "previous"){
+        currentPages.splice(pageNumber,1,currentText);
+        pageNumber--;
+        if (pageNumber < 0){
+            pageNumber = currentPages.length - 1;
+        }
+        editor.value = currentPages[pageNumber];
+        pageNumberButton.innerText = pageNumber + 1;
+        pageNumberMenuButton.innerText = pageNumber + 1;
+    }
+}
+
+function CreateNewPage(){
+    const currentText = editor.value;
+    currentPages.splice(pageNumber,1,currentText);
+    currentPages.push("");
+    pageNumber = currentPages.length - 1;
+    editor.value = "";
+    pageNumberButton.innerText = pageNumber + 1;
+    pageNumberMenuButton.innerText = pageNumber + 1;
+}
+
+selector.addEventListener('change', function ChangeInput(event) {
+        fileInput.value = event.target.value;
+    });
+
 document.addEventListener("keydown",(e) => {
     if (e.key.length == 1 && !e.repeat){
         PlayKeySound();
     }
 })
+
 ApplySettings(JSON.parse(localStorage.getItem("editorSettings")) ?? defaultSettings);

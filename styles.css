@@ -1,4 +1,4 @@
-/*CSS STYLESHEET FOR JCODE | CREATED: 03/09/2025 | LAST UPDATED: 03/09/2025*/
+/*CSS STYLESHEET FOR JCODE | CREATED: 03/09/2025 | LAST UPDATED: 24/02/2026*/
 
 /*COLOUR SCHEME**
 
@@ -104,12 +104,14 @@ body{
 }
 @media (max-width: 400px) {
     #settingsButton{
-        width: 15%;
-        height: 10%;
-        top: 90%;
-        background-size: 80px 80px;
-        background-position-x: 10px;
-        background-position-y: 10px;
+        width: 18%;
+        height: 13%;
+        top: 87%;
+        right: 0%;
+        background-position-x: 15px;
+        background-position-y: 15px;
+        background-size: 75%;
+        
     }
 }
 #settingsButton:hover{
@@ -194,29 +196,26 @@ body{
     background-color: #083045;
     
 }
+.buttonBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    height: 7vh;
+    margin-bottom: 10px;
+    background-color: #083045;
+    
+}
 header button{
     width: 50%;
-    background-color: #051f2d;
-    color: #efd469;
     border-radius: 10px;
     border: #efd469 solid 1px;
     font-size: 1.5em;
 }
 
-header button:hover,.customKey:hover,#selectorButton:hover{
-    background-color: #efd469;
-    color: #051f2d;
-}
 
-@media (max-width: 400px) {
-    #buttonBar {
-        flex-wrap: wrap;
-    }
-    #customKeyBar{
-        width: 20%;
-    }
-   
-}
+
 
 #customKeyBar{
 position: fixed;
@@ -236,8 +235,6 @@ height: 20%;
 text-wrap-mode: nowrap;
 align-items: center;
 align-content: center;
-background-color: #051f2d;
-color: #efd469;
 border-bottom-left-radius: 20px;
 border-top-left-radius: 20px;
 border: #efd469 solid 1px;
@@ -258,4 +255,68 @@ padding-right: 25px;
     z-index: 5;
 }
 
+.arrowButtonContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    z-index: 50;
+    margin: auto;
+}
+#arrowBar{
+    position: fixed;
+    top: 90%;
+    right: 85%;
+}
+.arrowButton{
+    width: 40px;
+    height: 40px;
+    border: #efd469 solid 1px;
+    border-radius: 50%;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+    font-weight: bolder;
+}
+#pageNumber{
+    padding-bottom: 0px;
+}
+#newPage{
+    padding-bottom: 0px;
+}
 
+#pageNumberMenu{
+    padding-bottom: 0px;
+}
+#newPageMenu{
+    padding-bottom: 0px;
+}
+
+button{
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    background-color: #051f2d;
+    color: #efd469;
+}
+button:hover{
+    background-color: #efd469;
+    color: #051f2d;
+}
+
+@media (max-width: 400px) {
+    #buttonBar {
+        flex-wrap: wrap;
+    }
+    #customKeyBar{
+        width: 20%;
+    }
+    #infoBar{
+        height: 5vh
+    }
+   #arrowBar{
+        top: 85%;
+        right: 50%;
+    }
+
+}

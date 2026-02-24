@@ -11,7 +11,7 @@
         
     </head>
     <body>
-        <span id="infoBar">JCode; Build 0.6.4; 24/02/2026;</span>
+        <span id="infoBar">JCode; Build 0.7.0; 24/02/2026;</span>
         <header id="buttonBar">
             <button onclick="New();">CLEAR</button>
             <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'load'});">LOAD</button>
@@ -22,6 +22,13 @@
         
 
         <textarea id="editor"></textarea>
+
+        <div class="arrowButtonContainer" id="arrowBar">
+        <button class="arrowButton" id="pageNumber">1</button>
+        <button class="arrowButton" onclick="MovePage('previous');">&#8592;</button>
+        <button class="arrowButton" onclick="MovePage('next');">&#8594;</button>
+        <button class="arrowButton" id="newPage" onclick="CreateNewPage();">+</button>
+        </div>
 
         <div id='customKeyBar'>
 
@@ -75,12 +82,21 @@
                 <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'load'});">LOAD</button>
                 <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'save'});">SAVE</button>
                 <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'export'});">EXPORT</button>
-                </header>
+            </header>
 
+            <br>
+            
+            <div class="arrowButtonContainer">
+            <button class="arrowButton" id="pageNumberMenu">1</button>
+            <button class="arrowButton" onclick="MovePage('previous');">&#8592;</button>
+            <button class="arrowButton" onclick="MovePage('next');">&#8594;</button>
+            <button class="arrowButton" id="newPageMenu" onclick="CreateNewPage();">+</button>
+            </div>
             <button onclick="CloseMenu();" id="closeButton">X</button>
 
             </div>
         </div>
+
         <button onclick="OpenMenu({type: 'settingsMenu', action: 'openSettings'});" id="settingsButton">
             
         </button>

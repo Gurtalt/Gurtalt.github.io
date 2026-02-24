@@ -1,4 +1,4 @@
-const CACHE_NAME = 'editor-cache-v0.6.4';
+const CACHE_NAME = 'editor-cache-v0.7.0';
 const FILES_TO_CACHE = [
     '/',
     '/index.html',
