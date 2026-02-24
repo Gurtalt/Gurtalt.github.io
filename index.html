@@ -11,12 +11,12 @@
         
     </head>
     <body>
-        <span id="infoBar">JCode; Build 0.6.2; 23/02/2026;</span>
+        <span id="infoBar">JCode; Build 0.6.3; 24/02/2026;</span>
         <header id="buttonBar">
             <button onclick="New();">CLEAR</button>
-            <button data-save-load="load" onclick="OpenFileLoader(this.dataset.saveLoad);">LOAD</button>
-            <button data-save-load="save" onclick="OpenFileLoader(this.dataset.saveLoad);">SAVE</button>
-            <button data-save-load="export" onclick="OpenFileLoader(this.dataset.saveLoad);">EXPORT</button>
+            <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'load'});">LOAD</button>
+            <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'save'});">SAVE</button>
+            <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'export'});">EXPORT</button>
         </header>
 
         
@@ -40,8 +40,8 @@
 
         </div>
 
-        <div id="fileSelector">
-            <div id="selectorBox">
+        <div id="menu">
+            <div id="fileSelectorMenu" class="menuContent">
             
                 <select name="selector" id="selector">
                     
@@ -51,13 +51,14 @@
                 
                 <button onclick="Load();" id="selectorButton">LOAD:</button>
                 
-                <button onclick="CloseFileLoader();" id="closeButton">X</button>
+                <button onclick="CloseMenu();" id="closeButton">X</button>
     
             </div>
 
-        </div>
-        <div id="settingsPanel">
-            <div>
+        
+        
+            <div id="settingsMenu" class="menuContent">
+
             <label for="editKeysToggle">Edit Keys:</label>
             <input type="checkbox" id="editKeysToggle" onchange="ToggleEditKeys();">
             <br>
@@ -71,14 +72,16 @@
             <br>
             <header id="buttonBar">
                 <button onclick="New();">CLEAR</button>
-                <button data-save-load="load" onclick="OpenFileLoader(this.dataset.saveLoad);">LOAD</button>
-                <button data-save-load="save" onclick="OpenFileLoader(this.dataset.saveLoad);">SAVE</button>
-                <button data-save-load="export" onclick="OpenFileLoader(this.dataset.saveLoad);">EXPORT</button>
+                <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'load'});">LOAD</button>
+                <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'save'});">SAVE</button>
+                <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'export'});">EXPORT</button>
                 </header>
-            <button onclick="CloseSettings();" id="closeButton">X</button>
+
+            <button onclick="CloseMenu();" id="closeButton">X</button>
+
             </div>
         </div>
-        <button onclick="OpenSettings();" id="settingsButton">
+        <button onclick="OpenMenu({type: 'settingsMenu', action: 'openSettings'});" id="settingsButton">
             
         </button>
         <script src="app.js"></script>

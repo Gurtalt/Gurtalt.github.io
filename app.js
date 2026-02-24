@@ -1,5 +1,6 @@
 const editor = document.getElementById("editor");
-const fileSelectorContainer = document.getElementById("fileSelector");
+const fileSelectorMenu = document.getElementById("fileSelectorMenu");
+const menuElement = document.getElementById("menu");
 const selector = document.getElementById("selector");
 const fileSelectorWrapper = document.getElementById("selectorBox");
 const selectorButton = document.getElementById("selectorButton");
@@ -13,12 +14,52 @@ const defaultSettings = {
 }
 let sounds = []
 const poolSize = 4;
+let settingsMenuOpen = false;
+let fileMenuOpen = false;
 
 
 function New(){
     editor.value = "";
 }
 
+function OpenMenu(menu){
+    if(settingsMenuOpen){
+        CloseMenu({type: 'settingsMenu', action: 'openSettings'});
+    }
+    else if (fileMenuOpen){
+        CloseMenu({type: 'fileSelectorMenu', action: 'close'});
+    }
+    menuElement.style.display = "block";
+    if (menu.type == "settingsMenu"){
+        settingsMenuOpen = true;
+        OpenSettings();
+    }
+    else if (menu.type == "fileSelectorMenu"){
+        fileMenuOpen = true;
+        OpenFileLoader(menu.action);
+    }
+    menuElement.addEventListener("click", CloseMenu, { once: true });
+    menuElement.querySelector("#settingsMenu").addEventListener("click",(e) => {e.stopPropagation();});
+    menuElement.querySelector("#fileSelectorMenu").addEventListener("click",(e) => {e.stopPropagation();});
+}
+function CloseMenu(){
+    menuElement.style.display = "none";
+    if(settingsMenuOpen){
+        settingsMenuOpen = false;
+        ApplySettings({
+            additionalKeysEnabled: document.getElementById("additionalKeysToggle").checked,
+            keySoundEnabled: document.getElementById("keySoundToggle").checked,
+            editKeysEnabled: document.getElementById("editKeysToggle").checked
+        });
+        document.getElementById("settingsMenu").style.display = "none";
+    }
+
+    else if (fileMenuOpen){
+        fileMenuOpen = false;
+        fileSelectorMenu.style.display = "none";
+        lastFileName = selector.value;
+    }
+}          
 
 function OpenSettings(){
     const settings = JSON.parse(localStorage.getItem("editorSettings")) ?? defaultSettings;
@@ -29,16 +70,9 @@ function OpenSettings(){
     additionalKeysToggle.checked = settings.additionalKeysEnabled;
     keySoundToggle.checked = settings.keySoundEnabled;
     editKeysToggle.checked = settings.editKeysEnabled;
-    document.getElementById("settingsPanel").style.display = "block";
+    document.getElementById("settingsMenu").style.display = "flex";
 }
-function CloseSettings(){
-    ApplySettings({
-        additionalKeysEnabled: document.getElementById("additionalKeysToggle").checked,
-        keySoundEnabled: document.getElementById("keySoundToggle").checked,
-        editKeysEnabled: document.getElementById("editKeysToggle").checked
-    });
-    document.getElementById("settingsPanel").style.display = "none";
-}
+
 
 
 function ApplySettings(settings){
@@ -73,15 +107,14 @@ function ApplySettings(settings){
     localStorage.setItem("editorSettings",JSON.stringify(settings));
 }
 
-function OpenFileLoader(saveOrLoad){
-    const keys = []
-    fileSelectorContainer.addEventListener("click",CloseFileLoader);
-    fileSelectorWrapper.addEventListener("click",(e) => {e.stopPropagation();});
-    selector.addEventListener('change', function ChangeInput(event) {
+selector.addEventListener('change', function ChangeInput(event) {
         fileInput.value = event.target.value;
-    })
+    });
+
+function OpenFileLoader(action){
+    const keys = []
     selector.innerHTML = "";
-    fileSelectorContainer.style.display = "block";
+    fileSelectorMenu.style.display = "flex";
     for(let i=0; i < localStorage.length;i++){
         if (localStorage.key(i).startsWith("text_")){
                     keys.push(localStorage.key(i));
@@ -94,7 +127,7 @@ function OpenFileLoader(saveOrLoad){
 
     selector.value = lastFileName;
 
-    switch (saveOrLoad){
+    switch (action){
                     case "save": selectorButton.innerText = "SAVE"; selectorButton.onclick = Save; break;
 
                     case "load": selectorButton.innerText = "LOAD"; selectorButton.onclick = Load; break;
@@ -106,13 +139,7 @@ function OpenFileLoader(saveOrLoad){
     
 }
 
-function CloseFileLoader(){
-    fileSelectorContainer.style.display = "none";
-    lastFileName = selector.value;
-    
-    fileSelectorContainer.removeEventListener("click",CloseFileLoader);
-    selector.removeEventListener("click",(e) => {e.stopPropagation();});
-}
+
 
 
 
@@ -124,7 +151,7 @@ function Load(){
         editor.selectionStart = fileData.cursorPosition;
         editor.selectionEnd = fileData.cursorPosition;
     }
-    CloseFileLoader();
+    CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
 
 function Save(){
@@ -133,9 +160,9 @@ function Save(){
         content: editor.value,
         cursorPosition: editor.selectionStart
     }
-
+    
     localStorage.setItem("text_"+fileInput.value,JSON.stringify(fileData));
-    CloseFileLoader();
+    CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
 
 function Export(){
@@ -146,9 +173,10 @@ function Export(){
     }
     const fileData = JSON.parse(file);
     const subject = encodeURIComponent(fileData.name);
-    let email = subject+" <"+prompt("Enter desired recipiants Email:")+">";
+    const email = prompt("Enter desired recipiants Email:");
     const body = encodeURIComponent(fileData.content);
     window.location.href =`mailto:${email}?subject=${subject}&body=${body}`;
+    CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
 
 function SpawnKey(leftBracket,rightBracket){

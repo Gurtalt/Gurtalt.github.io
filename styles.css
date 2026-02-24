@@ -46,29 +46,33 @@ body{
     flex: 1 1 auto;
     background-color: #083045;
     color: #efd469;
+    z-index: 0;
 }
-#settingsPanel{
+#menu{
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 1000; 
+    z-index: 100; 
     display: none;
     left: 0%;
-    top: 18%;
+    top: 0%;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
-#settingsPanel div{
+#settingsMenu{
     background-color: #051f2d;
     border: #efd469 solid 5px;
     border-radius: 40px;
     width: 60%;
     padding: 20px;
-    display: flex;
+    display: none;
     flex-direction: column; 
     justify-content: space-between;
     margin: auto;
+    z-index: 101;
+    margin-top: 20%;
+
 }
 
 #settingsPanel label{
@@ -95,7 +99,7 @@ body{
 
     color: #efd469;
     font-size: 1.5em;
-    z-index: 2000;
+    z-index: 50;
      
 }
 @media (max-width: 400px) {
@@ -113,28 +117,20 @@ body{
     color: #051f2d;
 }
 
-#fileSelector{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1000; 
-    display: none;
-    left: 0%;
-    top: 18%;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-#selectorBox{
+
+#fileSelectorMenu{
     background-color: #051f2d;
     border: #efd469 solid 5px;
     border-radius: 40px;
     width: 70%;
     padding: 20px;
-    display: flex;
+    display: none;
     flex-direction: column; 
     justify-content: space-between;
     margin: auto;
+    margin-top: 10%;
+    margin-top: 20%;
+
 }
 #selector{
     width: 50vw;
@@ -259,6 +255,7 @@ padding-right: 25px;
     font-size: 0.8em;
     padding: 5px 0;
     border-top: #efd469 solid 1px;
+    z-index: 5;
 }
 
 
