@@ -152,14 +152,23 @@ function OpenFileLoader(action){
 }
 
 
+// Load function that gets a saved file from local storage with the prefix text_, using it to populate the editor and current pages
+
 function Load(){
     let importedContent = localStorage.getItem("text_"+fileInput.value);
     if (importedContent){
         const fileData = JSON.parse(importedContent);
-        editor.value = fileData.content[0];
+        if(Array.isArray(fileData.content)  && fileData.content.length > 0){
+            currentPages = fileData.content;
+            editor.value = fileData.content[0];
+        }
+        else{
+            currentPages = [fileData.content || ""];
+            editor.value = fileData.content || "";
+        }
+        
         editor.selectionStart = fileData.cursorPosition;
         editor.selectionEnd = fileData.cursorPosition;
-        currentPages = fileData.content;
         pageNumber = 0;
         pageNumberButton.innerText = pageNumber + 1;
         pageNumberMenuButton.innerText = pageNumber + 1;
@@ -167,6 +176,8 @@ function Load(){
     CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
 
+
+// Save function that saves the currently worked on page before saving the entire pages in the doc to a file then saving that to local storage
 
 function Save(){
     currentPages.splice(pageNumber,1,editor.value);
@@ -180,6 +191,8 @@ function Save(){
     CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
 
+
+// Export function that gets the file from local storage in the same way as Load, but this time using the contents to create an email to be sent to the desired address
 
 function Export(){
     const file = localStorage.getItem("text_"+fileInput.value);
@@ -195,6 +208,8 @@ function Export(){
     CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
 
+
+// Spawn key function that spawns the given keys on either side of the selection area
 
 function SpawnKey(leftBracket,rightBracket){
     editor.focus()
@@ -214,6 +229,8 @@ function SpawnKey(leftBracket,rightBracket){
 }
 
 
+// Play key sound function that uses a sound pool to play sounds on each key press on a rotation to not sound distorted. Sound pool used for performance, specifically on mobile
+
 function PlayKeySound(){
     if (sounds.length == 0) return; // No sounds available, likely because key sound is disabled
     
@@ -222,6 +239,8 @@ function PlayKeySound(){
     index = (index + 1) % sounds.length; // Move to the next sound in the pool
 }
 
+
+// Move page function that saves the current page before moving to the next or previous page depending on the direction parameter, also loops around when reaching the end or beginning of the pages
 
 function MovePage(direction){
     const currentText = editor.value;
@@ -251,6 +270,9 @@ function MovePage(direction){
     }
 }
 
+
+// Create new page function that saves the current page before creating a new page at the end of the pages array and moving to it
+
 function CreateNewPage(){
     const currentText = editor.value;
     currentPages.splice(pageNumber,1,currentText);
@@ -261,6 +283,9 @@ function CreateNewPage(){
     pageNumberMenuButton.innerText = pageNumber + 1;
 }
 
+
+// Event listener for the file selector that updates the file name variable when a new file is selected from the dropdown
+
 selector.addEventListener('change', function ChangeInput(event) {
         fileInput.value = event.target.value;
     });
@@ -270,5 +295,7 @@ document.addEventListener("keydown",(e) => {
         PlayKeySound();
     }
 })
+
+// On page load, check if there are saved settings in local storage and apply them, otherwise apply default settings
 
 ApplySettings(JSON.parse(localStorage.getItem("editorSettings")) ?? defaultSettings);
