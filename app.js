@@ -145,7 +145,8 @@ function OpenFileLoader(action){
                     case "load": selectorButton.innerText = "LOAD"; selectorButton.onclick = Load; break;
 
                     case "export": selectorButton.innerText = "EXPORT"; selectorButton.onclick = Export; break;
-                        
+                     
+                     case "delete": selectorButton.innerText = "DELETE"; selectorButton.onclick = DeleteFile; break;
                 }
     
     
@@ -205,6 +206,15 @@ function Export(){
     const email = prompt("Enter desired recipiants Email:");
     const body = encodeURIComponent(fileData.content.join("\n---PAGE BREAK---\n"));
     window.location.href =`mailto:${email}?subject=${subject}&body=${body}`;
+    CloseMenu({type: 'fileSelectorMenu', action: 'close'});
+}
+
+
+
+function DeleteFile(){
+    if (confirm("Are you sure you want to delete this file? This action cannot be undone.")){
+        localStorage.removeItem("text_"+fileInput.value);
+    }
     CloseMenu({type: 'fileSelectorMenu', action: 'close'});
 }
 
@@ -281,6 +291,26 @@ function CreateNewPage(){
     editor.value = "";
     pageNumberButton.innerText = pageNumber + 1;
     pageNumberMenuButton.innerText = pageNumber + 1;
+}
+
+
+// Delete page function that deletes the current page and moves to the next page, if there is only one page it just clears the content of that page instead of deleting it to avoid having an empty pages array which would break the editor
+
+function DeletePage(){
+    if(confirm("Are you sure you want to delete this page? This action cannot be undone.")){
+    if (currentPages.length == 1){
+        currentPages[0] = "";
+    }
+    else {
+        currentPages.splice(pageNumber,1);
+        while (pageNumber >= currentPages.length){
+            pageNumber -= 1;
+        }
+        editor.value = currentPages[pageNumber];
+        pageNumberButton.innerText = pageNumber + 1;
+        pageNumberMenuButton.innerText = pageNumber + 1;
+    }
+    }
 }
 
 

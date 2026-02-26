@@ -11,7 +11,7 @@
         
     </head>
     <body>
-        <span id="infoBar">JCode; Build 0.7.3; 25/02/2026;</span>
+        <span id="infoBar">JCode; Build 0.7.4; 26/02/2026;</span>
         <header id="buttonBar">
             <button onclick="New();">CLEAR</button>
             <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'load'});">LOAD</button>
@@ -23,8 +23,11 @@
 
         <textarea id="editor"></textarea>
 
+        
+
         <div class="arrowButtonContainer" id="arrowBar">
         <button class="arrowButton" id="pageNumber">1</button>
+        <button class="arrowButton" id="deletePage" onclick="DeletePage();">-</button>
         <button class="arrowButton" onclick="MovePage('previous');">&#8592;</button>
         <button class="arrowButton" onclick="MovePage('next');">&#8594;</button>
         <button class="arrowButton" id="newPage" onclick="CreateNewPage();">+</button>
@@ -82,12 +85,16 @@
                 <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'load'});">LOAD</button>
                 <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'save'});">SAVE</button>
                 <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'export'});">EXPORT</button>
+                
             </header>
+            
+            <button onclick="OpenMenu({type: 'fileSelectorMenu', action: 'delete'});">DELETE FILES</button>
 
             <br>
             
             <div class="arrowButtonContainer">
             <button class="arrowButton" id="pageNumberMenu">1</button>
+            <button class="arrowButton" id="deletePageMenu" onclick="DeletePage();">-</button>
             <button class="arrowButton" onclick="MovePage('previous');">&#8592;</button>
             <button class="arrowButton" onclick="MovePage('next');">&#8594;</button>
             <button class="arrowButton" id="newPageMenu" onclick="CreateNewPage();">+</button>

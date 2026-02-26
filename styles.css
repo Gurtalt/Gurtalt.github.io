@@ -32,6 +32,25 @@ body{
     color: #efd469;
 
 }
+
+button{
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    background-color: #051f2d;
+    color: #efd469;
+    width: 70%;
+    border: #efd469 solid 1px;
+    font-size: 1.5em;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button:hover{
+    background-color: #efd469;
+    color: #051f2d;
+}
+
 #editor{
     width: 95%;
     
@@ -259,13 +278,14 @@ padding-right: 25px;
 .arrowButtonContainer{
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 2px;
     z-index: 50;
     margin: auto;
+    flex-wrap: wrap;
 }
 #arrowBar{
     position: fixed;
-    top: 90%;
+    top: 86%;
     right: 85%;
 }
 .arrowButton{
@@ -282,28 +302,41 @@ padding-right: 25px;
 }
 #pageNumber{
     padding-bottom: 0px;
+    background-color: transparent;
+    border: none;
+    flex: 1 1 100%;
+    height: auto;
+    font-size: 1.5em;
+    padding: 0px;
+
+
+    
 }
 #newPage{
+    padding-bottom: 0px;
+}
+#deletePage{
     padding-bottom: 0px;
 }
 
 #pageNumberMenu{
     padding-bottom: 0px;
+    background-color: transparent;
+    border: none;
+    flex: 1 1 100%;
+    height: auto;
+    font-size: 1.5em;
+    padding: 0px;
 }
+
 #newPageMenu{
     padding-bottom: 0px;
 }
+#deletePageMenu{
+    padding-bottom: 0px;
+}
 
-button{
-    transition: background-color 0.3s, color 0.3s;
-    cursor: pointer;
-    background-color: #051f2d;
-    color: #efd469;
-}
-button:hover{
-    background-color: #efd469;
-    color: #051f2d;
-}
+
 
 @media (max-width: 400px) {
     #buttonBar {
@@ -316,8 +349,9 @@ button:hover{
         height: 5vh
     }
    #arrowBar{
-        top: 87%;
+        top: 79%;
         right: 50%;
     }
+
 
 }
