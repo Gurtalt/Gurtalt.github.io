@@ -9,6 +9,10 @@ async function displayProjects(projects) {
     projectList.innerHTML = '';
 
     projects.forEach(project => {
+        if (project.name === 'gurtalt.github.io') {
+            return; 
+        }
+
         const card = document.createElement("div");
 
         card.className = "project-card";
